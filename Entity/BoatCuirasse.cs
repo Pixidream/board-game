@@ -18,11 +18,12 @@ namespace board_game {
             }
         
         public BoatCuirasse(){
-
+            this.size = 2;
+            this.nom = "Cuirasse";
         }
         public BoatCuirasse(int[] coordX, int[] coordY){
             this.x = coordX; 
-            this.Y = coordY;
+            this.y = coordY;
             this.size = 2;
             this.nom = "Cuirasse";
         }

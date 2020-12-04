@@ -9,10 +9,13 @@ namespace board_game {
             DotNetEnv.Env.Load();
             warshipAgent.onSpeech += CallbackVoice;
             warshipAgent.startListening();
-            Game mygame = new Game();
-        	mygame.displayGrid();
-            mygame.initPlayer();
-            mygame.initShips();
+            Game myGame = new Game();
+        	myGame.displayGrid();
+            myGame.initPlayer();
+            Save save = new Save();
+            myGame.initShip1();
+            myGame.initShip2();
+            myGame.initShip3();
         }
 
         static async void CallbackVoice(string text) {
