@@ -4,19 +4,23 @@ namespace board_game {
     class BoatCuirasse : Boat {
         private String nom;
         public String Nom {get => nom;}
-        public char[] x = new char[] {' ',' '};
-        public char[] y = new char[] {' ',' '};
+        public int[] x = new int[] {' ',' '};
+        public int[] y = new int[] {' ',' '};
         public int size;
         public int Size {get => size; set => size = value;}
-        public char[] X { 
+        public int[] X { 
             get { return x ;}
             set { x = value ;}
             }
-        public char[] Y {
+        public int[] Y {
              get { return y ;}
              set { y = value ;}
             }
-        public BoatCuirasse(char[] coordX, char[] coordY){
+        
+        public BoatCuirasse(){
+
+        }
+        public BoatCuirasse(int[] coordX, int[] coordY){
             this.x = coordX; 
             this.Y = coordY;
             this.size = 2;

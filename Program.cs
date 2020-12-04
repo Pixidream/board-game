@@ -11,7 +11,8 @@ namespace board_game {
             warshipAgent.startListening();
             Game mygame = new Game();
         	mygame.displayGrid();
-            mygame.InitShips();
+            mygame.initPlayer();
+            mygame.initShips();
         }
 
         static async void CallbackVoice(string text) {
