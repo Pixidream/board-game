@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace board_game {
     interface IA {
-        Task playComputerTurn(ArrayList args);
+        List<int> playComputerTurn();
     }
 }

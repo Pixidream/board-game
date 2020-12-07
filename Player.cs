@@ -3,7 +3,6 @@ using System;
 namespace board_game {
    [Serializable()]
    class Player {
-
         public String name;
         public String Name { 
             get {return name;} 
