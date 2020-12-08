@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DotNetEnv;
 
 namespace board_game {
     class Program {
         static Agent warshipAgent = Agent.getInstance(DotNetEnv.Env.GetString("AZURE_API_KEY"), DotNetEnv.Env.GetString("AZURE_API_LOCATION"));
-        static void Main(string[] args) {
+        static async Task Main(string[] args) {
             // load env variables
             DotNetEnv.Env.Load();
             var title = @"
@@ -29,7 +30,8 @@ namespace board_game {
             Console.WriteLine(title);
             Console.ResetColor();
             warshipAgent.onSpeech += CallbackVoice;
-            warshipAgent.startListening();
+            await warshipAgent.startListening();
+            Console.ReadLine();
             Game myGame = new Game();
             myGame.initPlayer();
             Save save = new Save();
@@ -57,7 +59,7 @@ namespace board_game {
 
         static async void CallbackVoice(string text) {
             await warshipAgent.stopListening();
-            await warshipAgent.SynthesisToSpeackerAsync(text);
+            await warshipAgent.SynthesisToSpeakerAsync(text);
         }
     }
 }
