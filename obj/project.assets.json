@@ -4782,11 +4782,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Final\\Desktop\\cour\\Projet_C#\\board-game\\board-game.csproj",
+      "projectUniqueName": "C:\\Users\\Final\\Desktop\\Projet_C#\\board-game\\board-game.csproj",
       "projectName": "board-game",
-      "projectPath": "C:\\Users\\Final\\Desktop\\cour\\Projet_C#\\board-game\\board-game.csproj",
+      "projectPath": "C:\\Users\\Final\\Desktop\\Projet_C#\\board-game\\board-game.csproj",
       "packagesPath": "C:\\Users\\Final\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Final\\Desktop\\cour\\Projet_C#\\board-game\\obj\\",
+      "outputPath": "C:\\Users\\Final\\Desktop\\Projet_C#\\board-game\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

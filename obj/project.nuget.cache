@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1UKRDjUjndFHWt1jdAkC8T+soM5nKWDrW2JzSNfpE36gKWugfKqozuQ8VJtAa94xFNQbl4dzfhUkU7reRjfPdQ==",
+  "dgSpecHash": "JkjNlidwGKJAfkB32/CV7/V4hrEnv8AMX//8OIioGvaFWzZy2niuBrcZrXxqM5OsFymgCVznh3Hws5QjjgG/9g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Final\\Desktop\\cour\\Projet_C#\\board-game\\board-game.csproj",
+  "projectFilePath": "C:\\Users\\Final\\Desktop\\Projet_C#\\board-game\\board-game.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Final\\.nuget\\packages\\dotenv.net\\2.1.1\\dotenv.net.2.1.1.nupkg.sha512",
     "C:\\Users\\Final\\.nuget\\packages\\dotnetenv\\1.4.0\\dotnetenv.1.4.0.nupkg.sha512",
