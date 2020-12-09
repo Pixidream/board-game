@@ -6,11 +6,7 @@ namespace board_game
     {
         static String path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//BattleShip.xml";
 
-<<<<<<< HEAD
-        public static void WriteXML(Player player)
-=======
         public void WriteXML(Player player)
->>>>>>> 0b282e9dee55a3289b27846e5604468c56833ce4
         {
             System.Xml.Serialization.XmlSerializer writer =
                            new System.Xml.Serialization.XmlSerializer(typeof(Player));
@@ -19,10 +15,6 @@ namespace board_game
 
             writer.Serialize(file, player);
             file.Close();
-<<<<<<< HEAD
-
-=======
->>>>>>> 0b282e9dee55a3289b27846e5604468c56833ce4
         }
 
         public static void readXML()
