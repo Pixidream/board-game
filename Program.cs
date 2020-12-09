@@ -1,11 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
+<<<<<<< HEAD
 using DotNetEnv;
 
 namespace board_game {
     class Program {
         static Agent warshipAgent = Agent.getInstance(DotNetEnv.Env.GetString("AZURE_API_KEY"), DotNetEnv.Env.GetString("AZURE_API_LOCATION"));
         static async Task Main(string[] args) {
+=======
+using System.Collections.Generic;
+using DotNetEnv;
+
+namespace board_game
+{
+    class Program
+    {
+        static Agent warshipAgent = Agent.getInstance(DotNetEnv.Env.GetString("AZURE_API_KEY"), DotNetEnv.Env.GetString("AZURE_API_LOCATION"));
+        static async Task Main(string[] args)
+        {
+>>>>>>> 0b282e9dee55a3289b27846e5604468c56833ce4
             // load env variables
             DotNetEnv.Env.Load();
             var title = @"
@@ -29,6 +42,7 @@ namespace board_game {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(title);
             Console.ResetColor();
+<<<<<<< HEAD
             warshipAgent.onSpeech += CallbackVoice;
             await warshipAgent.startListening();
             Console.ReadLine();
@@ -38,6 +52,16 @@ namespace board_game {
         	myGame.displayGrid();
             myGame.initShip1();
         	myGame.displayGrid();
+=======
+            //warshipAgent.onSpeech += CallbackVoice;
+            //await warshipAgent.startListening();
+            //Console.ReadLine();
+            Game myGame = new Game();
+            myGame.initPlayer();
+            myGame.displayGrid();
+            myGame.initShip1();
+            myGame.displayGrid();
+>>>>>>> 0b282e9dee55a3289b27846e5604468c56833ce4
             myGame.initShip2();
             myGame.displayGrid();
             myGame.initShip3();
@@ -47,19 +71,38 @@ namespace board_game {
             myGame.displayGrid();
             myGame.displayGridAttack();
             Console.Write("Enemy is ready\n");
+<<<<<<< HEAD
             do{
+=======
+            do
+            {
+>>>>>>> 0b282e9dee55a3289b27846e5604468c56833ce4
                 myGame.Attack();
                 myGame.AttackIa();
                 myGame.displayGrid();
                 myGame.displayGridAttack();
                 // IA IA = IAFactory.GetIA(myGame);
+<<<<<<< HEAD
                 } while(!myGame.isIaWin() && !myGame.isWin());
             
         }
 
         static async void CallbackVoice(string text) {
+=======
+            } while (!myGame.isIaWin() && !myGame.isWin());
+        }
+
+
+        static async void CallbackVoice(string text)
+        {
+>>>>>>> 0b282e9dee55a3289b27846e5604468c56833ce4
             await warshipAgent.stopListening();
             await warshipAgent.SynthesisToSpeakerAsync(text);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 0b282e9dee55a3289b27846e5604468c56833ce4

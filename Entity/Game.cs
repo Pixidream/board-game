@@ -10,16 +10,20 @@ namespace board_game
         Grid grille;
         Grid grilleIa;
         Grid grilleAttack;
+        Player player;
         private int level = 0;
-        public int Level {
-            get{ return level;}
-            set{ level = value;}
-        } 
+        public int Level
+        {
+            get { return level; }
+            set { level = value; }
+        }
 
-        public Game() {
+        public Game()
+        {
             this.grille = new Grid();
             this.grilleIa = new Grid();
             this.grilleAttack = new Grid();
+            this.player = new Player();
         }
         public void displayGrid()
         {
@@ -29,7 +33,7 @@ namespace board_game
 
             for (int k = 0; k < this.grille.Board.GetLength(1); k++)
             {
-                switch(k)
+                switch (k)
                 {
                     case 0:
                         Console.Write(" 0");
@@ -56,16 +60,16 @@ namespace board_game
                         break;
                 }
             }
-           Console.Write("\n");
-           for (int i = 0; i < this.grille.Board.GetLength(0); i++)
-            {   
-                char letter =' ';
-                if(i == 0)letter = 'A';
-                else if(i == 1)letter = 'B';
-                else if(i == 2)letter = 'C';
-                else if(i == 3)letter = 'D';
-                else if(i == 4)letter = 'E';
-                else if(i == 5)letter = 'F';
+            Console.Write("\n");
+            for (int i = 0; i < this.grille.Board.GetLength(0); i++)
+            {
+                char letter = ' ';
+                if (i == 0) letter = 'A';
+                else if (i == 1) letter = 'B';
+                else if (i == 2) letter = 'C';
+                else if (i == 3) letter = 'D';
+                else if (i == 4) letter = 'E';
+                else if (i == 5) letter = 'F';
                 Console.Write(letter);
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.White;
@@ -87,51 +91,53 @@ namespace board_game
         {
             Console.WriteLine("Enter your name");
             String playerName = Console.ReadLine();
-            Player player = new Player();
-            player.Name = playerName;
+            this.player.Name = playerName;
         }
         public void initShip1()
         {
             List<Boat> boats = new List<Boat>();
-                bool resultx = false;
-                bool resulty = false;
-                int x;
-                int y;
-                bool resultletter;
-                char letter;
-                char upperletter;
-                Console.Write("\n Choose the location of your first Ship : Cuirasse ");  
-            do{
+            bool resultx = false;
+            bool resulty = false;
+            int x;
+            int y;
+            bool resultletter;
+            char letter;
+            char upperletter;
+            Console.Write("\n Choose the location of your first Ship : Cuirasse ");
+            do
+            {
                 string inputx;
                 Console.Write("\n Enter the coordinates of x: ");
                 inputx = Console.ReadLine();
                 resultletter = char.TryParse(inputx, out letter);
                 upperletter = char.ToUpper(letter);
                 x = 6;
-                if(resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
-                 (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F'))){
-                     resultx = true;
-                     if(upperletter == 'A') x=0;
-                     else if(upperletter == 'B') x=1;
-                     else if(upperletter == 'C') x=2;
-                     else if(upperletter == 'D') x=3;
-                     else if(upperletter == 'E') x=4;
-                     else if(upperletter == 'F') x=5;
-                 }
-               //resultx = int.TryParse(inputx, out x);
+                if (resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
+                 (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F')))
+                {
+                    resultx = true;
+                    if (upperletter == 'A') x = 0;
+                    else if (upperletter == 'B') x = 1;
+                    else if (upperletter == 'C') x = 2;
+                    else if (upperletter == 'D') x = 3;
+                    else if (upperletter == 'E') x = 4;
+                    else if (upperletter == 'F') x = 5;
+                }
+                //resultx = int.TryParse(inputx, out x);
                 if (resultx == false || x > 5)
                 {
-                    Console.WriteLine(resultx +"t"+  x);
+                    Console.WriteLine(resultx + "t" + x);
                     Console.Write("\n Please Enter Letter between A and F Only.");
                 }
                 else
                 {
-                    Console.Write("\n you choose x = "+ (x));
+                    Console.Write("\n you choose x = " + (x));
                     break;
                 }
             } while (resultx == false || x > 5);
 
-            do{
+            do
+            {
                 string inputy;
                 Console.WriteLine("\n Enter the coordinates of y: ");
                 inputy = Console.ReadLine();
@@ -142,10 +148,10 @@ namespace board_game
                 }
                 else
                 {
-                    Console.WriteLine("you choose y = "+(y));
+                    Console.WriteLine("you choose y = " + (y));
                     break;
                 }
-            }while (resulty == false || y >5);
+            } while (resulty == false || y > 5);
 
             BoatCuirasse boatCuirasse = new BoatCuirasse();
 
@@ -275,46 +281,50 @@ namespace board_game
         {
             List<Boat> boats = new List<Boat>();
 
-                bool resultx = false;
-                bool resulty = false;
-                int x;
-                int y;
-                bool resultletter;
-                char letter;
-                char upperletter;
-                Console.Write("\n Choose the location of your second Ship : Destroyer ");
-            do{
-                do{
+            bool resultx = false;
+            bool resulty = false;
+            int x;
+            int y;
+            bool resultletter;
+            char letter;
+            char upperletter;
+            Console.Write("\n Choose the location of your second Ship : Destroyer ");
+            do
+            {
+                do
+                {
                     string inputx;
                     Console.Write("\n Enter the coordinates of x: ");
                     inputx = Console.ReadLine();
                     resultletter = char.TryParse(inputx, out letter);
                     upperletter = char.ToUpper(letter);
                     x = 6;
-                    if(resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
-                    (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F'))){
+                    if (resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
+                    (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F')))
+                    {
                         resultx = true;
-                        if(upperletter == 'A') x=0;
-                        else if(upperletter == 'B') x=1;
-                        else if(upperletter == 'C') x=2;
-                        else if(upperletter == 'D') x=3;
-                        else if(upperletter == 'E') x=4;
-                        else if(upperletter == 'F') x=5;
+                        if (upperletter == 'A') x = 0;
+                        else if (upperletter == 'B') x = 1;
+                        else if (upperletter == 'C') x = 2;
+                        else if (upperletter == 'D') x = 3;
+                        else if (upperletter == 'E') x = 4;
+                        else if (upperletter == 'F') x = 5;
                     }
                     //resultx = int.TryParse(inputx, out x);
                     if (resultx == false || x > 5)
                     {
-                        Console.WriteLine(resultx +"t"+  x);
+                        Console.WriteLine(resultx + "t" + x);
                         Console.Write("\n Please Enter Letter between A and F Only.");
                     }
                     else
                     {
-                        Console.Write("\n you choose x = "+ (x));
+                        Console.Write("\n you choose x = " + (x));
                         break;
                     }
-                } while (resultx == false || x > 5 );
+                } while (resultx == false || x > 5);
 
-                do{
+                do
+                {
                     string inputy;
                     Console.WriteLine("\n Enter the coordinates of y: ");
                     inputy = Console.ReadLine();
@@ -325,12 +335,12 @@ namespace board_game
                     }
                     else
                     {
-                        Console.WriteLine("you choose y = "+(y));
+                        Console.WriteLine("you choose y = " + (y));
                         break;
                     }
-                }while (resulty == false || y >5);
-            }while (this.grille.Board[x,y].Equals('1'));
-   
+                } while (resulty == false || y > 5);
+            } while (this.grille.Board[x, y].Equals('1'));
+
 
             BoatDestroyer boatDestroyer = new BoatDestroyer();
 
@@ -462,46 +472,50 @@ namespace board_game
         {
             List<Boat> boats = new List<Boat>();
 
-                bool resultx = false;
-                bool resulty = false;
-                int x;
-                int y;
-                bool resultletter;
-                char letter;
-                char upperletter;
-                Console.Write("\n Choose the location of your third Ship : NuclearShip ");
-            do{
-                do{
+            bool resultx = false;
+            bool resulty = false;
+            int x;
+            int y;
+            bool resultletter;
+            char letter;
+            char upperletter;
+            Console.Write("\n Choose the location of your third Ship : NuclearShip ");
+            do
+            {
+                do
+                {
                     string inputx;
                     Console.Write("\n Enter the coordinates of x: ");
                     inputx = Console.ReadLine();
                     resultletter = char.TryParse(inputx, out letter);
                     upperletter = char.ToUpper(letter);
                     x = 6;
-                    if(resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
-                    (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F'))){
+                    if (resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
+                    (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F')))
+                    {
                         resultx = true;
-                        if(upperletter == 'A') x=0;
-                        else if(upperletter == 'B') x=1;
-                        else if(upperletter == 'C') x=2;
-                        else if(upperletter == 'D') x=3;
-                        else if(upperletter == 'E') x=4;
-                        else if(upperletter == 'F') x=5;
+                        if (upperletter == 'A') x = 0;
+                        else if (upperletter == 'B') x = 1;
+                        else if (upperletter == 'C') x = 2;
+                        else if (upperletter == 'D') x = 3;
+                        else if (upperletter == 'E') x = 4;
+                        else if (upperletter == 'F') x = 5;
                     }
                     //resultx = int.TryParse(inputx, out x);
                     if (resultx == false || x > 5)
                     {
-                        Console.WriteLine(resultx +"t"+  x);
+                        Console.WriteLine(resultx + "t" + x);
                         Console.Write("\n Please Enter Letter between A and F Only.");
                     }
                     else
                     {
-                        Console.Write("\n you choose x = "+ (x));
+                        Console.Write("\n you choose x = " + (x));
                         break;
                     }
                 } while (resultx == false || x > 5);
 
-                do{
+                do
+                {
                     string inputy;
                     Console.WriteLine("\n Enter the coordinates of y: ");
                     inputy = Console.ReadLine();
@@ -512,11 +526,11 @@ namespace board_game
                     }
                     else
                     {
-                        Console.WriteLine("you choose y = "+(y));
+                        Console.WriteLine("you choose y = " + (y));
                         break;
                     }
-                }while (resulty == false || y >5);
-            }while (this.grille.Board[x,y].Equals('1'));
+                } while (resulty == false || y > 5);
+            } while (this.grille.Board[x, y].Equals('1'));
 
             BoatNuclearShip boatNuclearShip = new BoatNuclearShip();
 
@@ -609,12 +623,14 @@ namespace board_game
             var temp1 = Convert.ToInt32(Console.ReadLine());
         }
 
-        public bool isWin(){
+        public bool isWin()
+        {
             for (int i = 0; i < this.grille.Board.GetLength(0); i++)
             {
                 for (int j = 0; j < this.grille.Board.GetLength(1); j++)
                 {
-                    if(this.grilleIa.Board[i,j] == '1'){
+                    if (this.grilleIa.Board[i, j] == '1')
+                    {
                         return false;
                     }
                 }
@@ -622,18 +638,23 @@ namespace board_game
             Console.Write("#########################\n");
             Console.Write("     Vous avez gagné     \n");
             Console.Write("#########################");
+            this.player.Win = true;
+            save();
             return true;
         }
-        public bool isIaWin(){
+        public bool isIaWin()
+        {
             for (int i = 0; i < this.grille.Board.GetLength(0); i++)
             {
                 for (int j = 0; j < this.grille.Board.GetLength(1); j++)
                 {
-                    if(this.grille.Board[i,j] == '1'){
+                    if (this.grille.Board[i, j] == '1')
+                    {
                         return false;
                     }
                 }
             }
+            this.player.Win = false;
             Console.Write("#########################\n");
             Console.Write("       You loose  :(     \n");
             Console.Write("#########################");
@@ -644,7 +665,7 @@ namespace board_game
         {
             for (int k = 0; k < this.grille.Board.GetLength(1); k++)
             {
-                switch(k)
+                switch (k)
                 {
                     case 0:
                         Console.Write(" 0");
@@ -671,16 +692,16 @@ namespace board_game
                         break;
                 }
             }
-           Console.Write("\n");
-           for (int i = 0; i < this.grilleIa.Board.GetLength(0); i++)
+            Console.Write("\n");
+            for (int i = 0; i < this.grilleIa.Board.GetLength(0); i++)
             {
-                char letter =' ';
-                if(i == 0)letter = 'A';
-                else if(i == 1)letter = 'B';
-                else if(i == 2)letter = 'C';
-                else if(i == 3)letter = 'D';
-                else if(i == 4)letter = 'E';
-                else if(i == 5)letter = 'F';
+                char letter = ' ';
+                if (i == 0) letter = 'A';
+                else if (i == 1) letter = 'B';
+                else if (i == 2) letter = 'C';
+                else if (i == 3) letter = 'D';
+                else if (i == 4) letter = 'E';
+                else if (i == 5) letter = 'F';
                 Console.Write(letter);
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.White;
@@ -707,7 +728,7 @@ namespace board_game
 
             for (int k = 0; k < this.grilleAttack.Board.GetLength(1); k++)
             {
-                switch(k)
+                switch (k)
                 {
                     case 0:
                         Console.Write(" 0");
@@ -734,16 +755,16 @@ namespace board_game
                         break;
                 }
             }
-           Console.Write("\n");
-           for (int i = 0; i < this.grilleAttack.Board.GetLength(0); i++)
-            {   
-                char letter =' ';
-                if(i == 0)letter = 'A';
-                else if(i == 1)letter = 'B';
-                else if(i == 2)letter = 'C';
-                else if(i == 3)letter = 'D';
-                else if(i == 4)letter = 'E';
-                else if(i == 5)letter = 'F';
+            Console.Write("\n");
+            for (int i = 0; i < this.grilleAttack.Board.GetLength(0); i++)
+            {
+                char letter = ' ';
+                if (i == 0) letter = 'A';
+                else if (i == 1) letter = 'B';
+                else if (i == 2) letter = 'C';
+                else if (i == 3) letter = 'D';
+                else if (i == 4) letter = 'E';
+                else if (i == 5) letter = 'F';
                 Console.Write(letter);
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.White;
@@ -761,13 +782,14 @@ namespace board_game
                 Console.Write("\n");
             }
         }
-        public void initShipIa1(){
+        public void initShipIa1()
+        {
 
-                List<Boat> boats = new List<Boat>();
-                Random rand = new Random();
-                var x = rand.Next(0,5);
-                var y = rand.Next(0,5);
-                // string[] letter = new string[]{"n","s","e","w"} // tu rajouteras le reste
+            List<Boat> boats = new List<Boat>();
+            Random rand = new Random();
+            var x = rand.Next(0, 5);
+            var y = rand.Next(0, 5);
+            // string[] letter = new string[]{"n","s","e","w"} // tu rajouteras le reste
 
             BoatCuirasse boatCuirasseIA = new BoatCuirasse();
             var t = 0;
@@ -888,13 +910,12 @@ namespace board_game
             this.grilleIa.Board[boatCuirasseIA.X[0], boatCuirasseIA.Y[0]] = '1';
             this.grilleIa.Board[boatCuirasseIA.X[1], boatCuirasseIA.Y[1]] = '1';
         }
-        
         public void initShipIa2()
         {
             List<Boat> boats = new List<Boat>();
             Random rand = new Random();
-            var x = rand.Next(0,5);
-            var y = rand.Next(0,5);
+            var x = rand.Next(0, 5);
+            var y = rand.Next(0, 5);
 
             BoatDestroyer boatDestroyerIa = new BoatDestroyer();
 
@@ -1023,8 +1044,8 @@ namespace board_game
         {
             List<Boat> boats = new List<Boat>();
             Random rand = new Random();
-            var x = rand.Next(0,5);
-            var y = rand.Next(0,5);
+            var x = rand.Next(0, 5);
+            var y = rand.Next(0, 5);
 
             BoatNuclearShip boatNuclearShipIa = new BoatNuclearShip();
 
@@ -1111,7 +1132,8 @@ namespace board_game
         /*
             Player turn attack
         */
-        public void Attack(){
+        public void Attack()
+        {
 
             bool resultx = false;
             bool resulty = false;
@@ -1122,59 +1144,70 @@ namespace board_game
             char upperletter;
             Console.Write("\n Choose attack location");
 
-            do{
+            do
+            {
                 string inputx;
                 Console.Write("\n Enter the coordinates of x: ");
                 inputx = Console.ReadLine();
                 resultletter = char.TryParse(inputx, out letter);
                 upperletter = char.ToUpper(letter);
                 x = 6;
-                if(resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
-                (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F'))){
+                if (resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
+                (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F')))
+                {
                     resultx = true;
-                    if(upperletter == 'A') x=0;
-                    else if(upperletter == 'B') x=1;
-                    else if(upperletter == 'C') x=2;
-                    else if(upperletter == 'D') x=3;
-                    else if(upperletter == 'E') x=4;
-                    else if(upperletter == 'F') x=5;
+                    if (upperletter == 'A') x = 0;
+                    else if (upperletter == 'B') x = 1;
+                    else if (upperletter == 'C') x = 2;
+                    else if (upperletter == 'D') x = 3;
+                    else if (upperletter == 'E') x = 4;
+                    else if (upperletter == 'F') x = 5;
                 }
                 //resultx = int.TryParse(inputx, out x);
                 if (resultx == false || x > 5)
                 {
-                    Console.WriteLine(resultx +"t"+  x);
+                    Console.WriteLine(resultx + "t" + x);
                     Console.Write("\n Please Enter Letter between A and F Only.");
                 }
-                else{
-                    Console.Write("\n you choose x = "+ (x));
+                else
+                {
+                    Console.Write("\n you choose x = " + (x));
                     break;
                 }
-            }while (resultx == false || x > 5 );
+            } while (resultx == false || x > 5);
 
-            do{
+            do
+            {
                 string inputy;
                 Console.WriteLine("\n Enter the coordinates of y: ");
                 inputy = Console.ReadLine();
                 resulty = int.TryParse(inputy, out y);
-                if (resulty == false || y > 5){
+                if (resulty == false || y > 5)
+                {
                     Console.WriteLine("Please Enter Numbers between 0 and 5 Only.");
                 }
-                else{
-                    Console.WriteLine("you choose y = "+(y));
+                else
+                {
+                    Console.WriteLine("you choose y = " + (y));
                     break;
                 }
-            }while (resulty == false || y >5);
+            } while (resulty == false || y > 5);
 
-            if(this.grilleIa.Board[x,y].Equals('1')){
-                this.grilleIa.Board[x,y] = '2';
-                this.grilleAttack.Board[x,y] = 'X';
-                Console.WriteLine("Bateau touché en x : "+x+" y : "+y);
+            if (this.grilleIa.Board[x, y].Equals('1'))
+            {
+                this.grilleIa.Board[x, y] = '2';
+                this.grilleAttack.Board[x, y] = 'X';
+                Console.WriteLine("Bateau touché en x : " + x + " y : " + y);
+                this.player.Score += 2;
             }
-            else if(this.grilleAttack.Board[x,y].Equals('o') || this.grilleAttack.Board[x,y].Equals('X')){
+            else if (this.grilleAttack.Board[x, y].Equals('o') || this.grilleAttack.Board[x, y].Equals('X'))
+            {
                 Console.WriteLine("You have already hit this case");
             }
-            else if(this.grilleIa.Board[x,y].Equals(' ')){
-                this.grilleAttack.Board[x,y] = 'o';
+            else if (this.grilleIa.Board[x, y].Equals(' '))
+            {
+                this.grilleAttack.Board[x, y] = 'o';
+                this.player.Score--;
             }
         }
 
@@ -1183,35 +1216,66 @@ namespace board_game
         */
         public void AttackIa()
         {
-            while(true){
-            Random rand = new Random();
-            var x = rand.Next(0,5);
-            var y = rand.Next(0,5);
+            while (true)
+            {
+                Random rand = new Random();
+                var x = rand.Next(0, 5);
+                var y = rand.Next(0, 5);
 
-            if(this.grille.Board[x,y].Equals('1')){
-                this.grille.Board[x,y] = 'X';
-                Console.WriteLine("Enemy hit you x : "+x+" y : "+y);
-                break;
-            }
-            else if(this.grille.Board[x,y].Equals('o') || this.grille.Board[x,y].Equals('X')){
+                if (this.grille.Board[x, y].Equals('1'))
+                {
+                    this.grille.Board[x, y] = 'X';
+                    Console.WriteLine("Enemy hit you x : " + x + " y : " + y);
+                    break;
+                }
+                else if (this.grille.Board[x, y].Equals('o') || this.grille.Board[x, y].Equals('X'))
+                {
 
-            }
-            else if(this.grille.Board[x,y].Equals(' ')){
-                    this.grille.Board[x,y] = 'o';
-                Console.WriteLine("Enemy have miss");
-                break;
-            }
+                }
+                else if (this.grille.Board[x, y].Equals(' '))
+                {
+                    this.grille.Board[x, y] = 'o';
+                    Console.WriteLine("Enemy have miss");
+                    break;
+                }
             }
         }
 
-        private Boolean getBoatPosition() {
-            for(int i = 0; i < this.grilleIa.Board.GetLength(0); i++) {
-                for (int j = 0; j < this.grilleIa.Board.GetLength(1); j++) {
+        private Boolean getBoatPosition()
+        {
+            for (int i = 0; i < this.grilleIa.Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.grilleIa.Board.GetLength(1); j++)
+                {
                     if (this.grilleIa.Board[i, j].Equals('1')) return true;
                     else return false;
                 }
             }
             return false;
+        }
+        public void save()
+        {
+            string text = "";
+            do
+            {
+                Console.WriteLine("\n do you want to save ?\nEnter yes or no.");
+                text = Console.ReadLine();
+                if (text != "yes" && text != "no")
+                {
+                    Console.WriteLine("Please Enter yes or no");
+                }
+                else if (text == "yes")
+                {
+                    Console.WriteLine("save success");
+                    Save save = new Save();
+                    save.WriteXML(this.player);
+                    break;
+                }
+                else if (text == "no")
+                {
+                    break;
+                }
+            } while (text != "yes" && text != "no");
         }
     }
 }
