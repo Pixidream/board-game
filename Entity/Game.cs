@@ -7,6 +7,7 @@ namespace board_game
 {
     class Game
     {
+        private static Game instance = null;
         Grid grille;
         Grid grilleIa;
         Grid grilleAttack;
@@ -18,7 +19,16 @@ namespace board_game
             set { level = value; }
         }
 
-        public Game()
+        public static Game getInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Game();
+            }
+            return instance;
+        }
+
+        private Game()
         {
             this.grille = new Grid();
             this.grilleIa = new Grid();
@@ -1132,66 +1142,63 @@ namespace board_game
         /*
             Player turn attack
         */
-        public void Attack()
+        public void Attack(int x = 0, int y = 0)
         {
+            // bool resultx = false;
+            // bool resulty = false;
+            // bool resultletter;
+            // char letter;
+            // char upperletter;
+            // Console.Write("\n Choose attack location");
 
-            bool resultx = false;
-            bool resulty = false;
-            int x;
-            int y;
-            bool resultletter;
-            char letter;
-            char upperletter;
-            Console.Write("\n Choose attack location");
+            // do
+            // {
+            //     string inputx;
+            //     Console.Write("\n Enter the coordinates of x: ");
+            //     inputx = Console.ReadLine();
+            //     resultletter = char.TryParse(inputx, out letter);
+            //     upperletter = char.ToUpper(letter);
+            //     x = 6;
+            //     if (resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
+            //     (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F')))
+            //     {
+            //         resultx = true;
+            //         if (upperletter == 'A') x = 0;
+            //         else if (upperletter == 'B') x = 1;
+            //         else if (upperletter == 'C') x = 2;
+            //         else if (upperletter == 'D') x = 3;
+            //         else if (upperletter == 'E') x = 4;
+            //         else if (upperletter == 'F') x = 5;
+            //     }
+            //     //resultx = int.TryParse(inputx, out x);
+            //     if (resultx == false || x > 5)
+            //     {
+            //         Console.WriteLine(resultx + "t" + x);
+            //         Console.Write("\n Please Enter Letter between A and F Only.");
+            //     }
+            //     else
+            //     {
+            //         Console.Write("\n you choose x = " + (x));
+            //         break;
+            //     }
+            // } while (resultx == false || x > 5);
 
-            do
-            {
-                string inputx;
-                Console.Write("\n Enter the coordinates of x: ");
-                inputx = Console.ReadLine();
-                resultletter = char.TryParse(inputx, out letter);
-                upperletter = char.ToUpper(letter);
-                x = 6;
-                if (resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
-                (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F')))
-                {
-                    resultx = true;
-                    if (upperletter == 'A') x = 0;
-                    else if (upperletter == 'B') x = 1;
-                    else if (upperletter == 'C') x = 2;
-                    else if (upperletter == 'D') x = 3;
-                    else if (upperletter == 'E') x = 4;
-                    else if (upperletter == 'F') x = 5;
-                }
-                //resultx = int.TryParse(inputx, out x);
-                if (resultx == false || x > 5)
-                {
-                    Console.WriteLine(resultx + "t" + x);
-                    Console.Write("\n Please Enter Letter between A and F Only.");
-                }
-                else
-                {
-                    Console.Write("\n you choose x = " + (x));
-                    break;
-                }
-            } while (resultx == false || x > 5);
-
-            do
-            {
-                string inputy;
-                Console.WriteLine("\n Enter the coordinates of y: ");
-                inputy = Console.ReadLine();
-                resulty = int.TryParse(inputy, out y);
-                if (resulty == false || y > 5)
-                {
-                    Console.WriteLine("Please Enter Numbers between 0 and 5 Only.");
-                }
-                else
-                {
-                    Console.WriteLine("you choose y = " + (y));
-                    break;
-                }
-            } while (resulty == false || y > 5);
+            // do
+            // {
+            //     string inputy;
+            //     Console.WriteLine("\n Enter the coordinates of y: ");
+            //     inputy = Console.ReadLine();
+            //     resulty = int.TryParse(inputy, out y);
+            //     if (resulty == false || y > 5)
+            //     {
+            //         Console.WriteLine("Please Enter Numbers between 0 and 5 Only.");
+            //     }
+            //     else
+            //     {
+            //         Console.WriteLine("you choose y = " + (y));
+            //         break;
+            //     }
+            // } while (resulty == false || y > 5);
 
             if (this.grilleIa.Board[x, y].Equals('1'))
             {
@@ -1219,8 +1226,8 @@ namespace board_game
             while (true)
             {
                 Random rand = new Random();
-                var x = rand.Next(0, 5);
-                var y = rand.Next(0, 5);
+                var x = rand.Next(0, 6);
+                var y = rand.Next(0, 6);
 
                 if (this.grille.Board[x, y].Equals('1'))
                 {

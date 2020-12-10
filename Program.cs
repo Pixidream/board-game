@@ -33,15 +33,12 @@ namespace board_game
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(title);
             Console.ResetColor();
-            warshipAgent.onSpeech += CallbackVoice;
-            await warshipAgent.startListening();
-            Console.ReadLine();
-            Game myGame = new Game();
+            Game myGame = Game.getInstance();
             myGame.initPlayer();
             Save save = new Save();
-        	myGame.displayGrid();
+            myGame.displayGrid();
             myGame.initShip1();
-        	myGame.displayGrid();
+            myGame.displayGrid();
             myGame.initShip2();
             myGame.displayGrid();
             myGame.initShip3();
@@ -51,21 +48,26 @@ namespace board_game
             myGame.displayGrid();
             myGame.displayGridAttack();
             Console.Write("Enemy is ready\n");
-            do
-            {
-                myGame.Attack();
-                myGame.AttackIa();
-                myGame.displayGrid();
-                myGame.displayGridAttack();
-                // IA IA = IAFactory.GetIA(myGame);
-            } while (!myGame.isIaWin() && !myGame.isWin());
+            warshipAgent.onSpeech += CallbackVoice;
+            await warshipAgent.startListening();
+            Console.ReadLine();
         }
 
 
         static async void CallbackVoice(string text)
         {
             await warshipAgent.stopListening();
+            Action action = Action.searchAction(text);
+            if (action != null)
+            {
+                IVRPlugin plugin = VRPluginFactory.GetPlugin(warshipAgent, action);
+                if (plugin != null)
+                {
+                    await plugin.dispatchAction(action.Args);
+                }
+            }
             await warshipAgent.SynthesisToSpeakerAsync(text);
+            await warshipAgent.startListening();
         }
     }
 }
