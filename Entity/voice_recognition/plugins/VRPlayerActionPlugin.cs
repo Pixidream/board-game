@@ -21,7 +21,6 @@ namespace board_game
             string[] splitedResult = text.Split(new string[] { "en" }, StringSplitOptions.None);
             string[] getXY = text.Split(new string[] { " " }, StringSplitOptions.None);
 
-            Console.WriteLine($"x: {getXY[0]}, y: {getXY[1]},");
             if (getXY[1] == "un") y = 1;
             else if (getXY[1] == "deux") y = 2;
             else if (getXY[1] == "trois") y = 3;

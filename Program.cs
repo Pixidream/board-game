@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Collections.Generic;
 using DotNetEnv;
 
@@ -8,6 +9,8 @@ namespace board_game
     class Program
     {
         static Agent warshipAgent = Agent.getInstance(DotNetEnv.Env.GetString("AZURE_API_KEY"), DotNetEnv.Env.GetString("AZURE_API_LOCATION"));
+        public static ReadlineThread ReadlineThread = new ReadlineThread();
+        public static Thread thread = new Thread(new ThreadStart(ReadlineThread.ThreadLoop));
         static async Task Main(string[] args)
         {
             // load env variables
@@ -36,23 +39,11 @@ namespace board_game
             warshipAgent.onSpeech += CallbackVoice;
             Game myGame = Game.getInstance();
             await myGame.initPlayer();
-            // Console.ReadLine();
             Save save = new Save();
-            myGame.save();
             myGame.displayGrid();
-            myGame.initShip1();
-            myGame.displayGrid();
-            myGame.initShip2();
-            myGame.displayGrid();
-            myGame.initShip3();
-            myGame.initShipIa1();
-            myGame.initShipIa2();
-            myGame.initShipIa3();
-            myGame.displayGrid();
-            myGame.displayGridAttack();
-            await warshipAgent.SynthesisToSpeakerAsync("L'ennemie a bien créé sa map. A vous de jouer !");
+            await warshipAgent.SynthesisToSpeakerAsync("Placez vos bateau (Cuirassé, Destroyer, Nuclear Ship). Par exemple Cuirassé en a 1");
             await warshipAgent.startListening();
-            Console.ReadLine();
+            thread.Start();
         }
 
 

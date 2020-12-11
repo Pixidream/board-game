@@ -12,6 +12,9 @@ namespace board_game
         private static Game instance = null;
         Agent agent = Agent.getInstance(DotNetEnv.Env.GetString("AZURE_API_KEY"), DotNetEnv.Env.GetString("AZURE_API_LOCATION"));
         Grid grille;
+        public bool boat1Init = false;
+        public bool boat2Init = false;
+        public bool boat3Init = false;
         Grid grilleIa;
         Grid grilleAttack;
         public Player player;
@@ -107,67 +110,12 @@ namespace board_game
             await agent.startListening();
             // Console.ReadLine();
         }
-        public void initShip1()
+        public async Task initShip1(int x, int y)
         {
             List<Boat> boats = new List<Boat>();
-            bool resultx = false;
-            bool resulty = false;
-            int x;
-            int y;
-            bool resultletter;
-            char letter;
-            char upperletter;
-            Console.Write("\n Choose the location of your first Ship : Cuirasse ");
-            do
-            {
-                string inputx;
-                Console.Write("\n Enter the coordinates of x: ");
-                inputx = Console.ReadLine();
-                resultletter = char.TryParse(inputx, out letter);
-                upperletter = char.ToUpper(letter);
-                x = 6;
-                if (resultletter == true && ((upperletter == 'A') || (upperletter == 'B') || (upperletter == 'C') ||
-                 (upperletter == 'D') || (upperletter == 'E') || (upperletter == 'F')))
-                {
-                    resultx = true;
-                    if (upperletter == 'A') x = 0;
-                    else if (upperletter == 'B') x = 1;
-                    else if (upperletter == 'C') x = 2;
-                    else if (upperletter == 'D') x = 3;
-                    else if (upperletter == 'E') x = 4;
-                    else if (upperletter == 'F') x = 5;
-                }
-                //resultx = int.TryParse(inputx, out x);
-                if (resultx == false || x > 5)
-                {
-                    Console.WriteLine(resultx + "t" + x);
-                    Console.Write("\n Please Enter Letter between A and F Only.");
-                }
-                else
-                {
-                    Console.Write("\n you choose x = " + (x));
-                    break;
-                }
-            } while (resultx == false || x > 5);
-
-            do
-            {
-                string inputy;
-                Console.WriteLine("\n Enter the coordinates of y: ");
-                inputy = Console.ReadLine();
-                resulty = int.TryParse(inputy, out y);
-                if (resulty == false || y > 5)
-                {
-                    Console.WriteLine("Please Enter Numbers between 0 and 5 Only.");
-                }
-                else
-                {
-                    Console.WriteLine("you choose y = " + (y));
-                    break;
-                }
-            } while (resulty == false || y > 5);
 
             BoatCuirasse boatCuirasse = new BoatCuirasse();
+            Program.thread.Interrupt();
 
             Console.WriteLine("In which direction do you want the ship to be oriented ?");
             var t = 0;
@@ -287,18 +235,17 @@ namespace board_game
             }
             this.grille.Board[boatCuirasse.X[0], boatCuirasse.Y[0]] = '1';
             this.grille.Board[boatCuirasse.X[1], boatCuirasse.Y[1]] = '1';
+            this.boat1Init = true;
             //test getter
             Console.WriteLine(boatCuirasse.X[0].ToString() + ", " + boatCuirasse.Y[0].ToString());
             Console.WriteLine(boatCuirasse.X[1].ToString() + ", " + boatCuirasse.Y[1].ToString());
         }
-        public void initShip2()
+        public async Task initShip2(int x, int y)
         {
             List<Boat> boats = new List<Boat>();
 
             bool resultx = false;
             bool resulty = false;
-            int x;
-            int y;
             bool resultletter;
             char letter;
             char upperletter;
@@ -478,18 +425,16 @@ namespace board_game
             this.grille.Board[boatDestroyer.X[0], boatDestroyer.Y[0]] = '1';
             this.grille.Board[boatDestroyer.X[1], boatDestroyer.Y[1]] = '1';
             this.grille.Board[boatDestroyer.X[2], boatDestroyer.Y[2]] = '1';
+            this.boat2Init = true;
             //test getter
             Console.WriteLine(boatDestroyer.X[2].ToString() + ", " + boatDestroyer.Y[2].ToString());
         }
 
-        public void initShip3()
+        public async Task initShip3(int x, int y)
         {
             List<Boat> boats = new List<Boat>();
-
             bool resultx = false;
             bool resulty = false;
-            int x;
-            int y;
             bool resultletter;
             char letter;
             char upperletter;
@@ -624,6 +569,7 @@ namespace board_game
             this.grille.Board[boatNuclearShip.X[1], boatNuclearShip.Y[1]] = '1';
             this.grille.Board[boatNuclearShip.X[2], boatNuclearShip.Y[2]] = '1';
             this.grille.Board[boatNuclearShip.X[3], boatNuclearShip.Y[3]] = '1';
+            this.boat3Init = true;
             //test getter
             Console.WriteLine(boatNuclearShip.X[3].ToString() + ", " + boatNuclearShip.Y[3].ToString());
         }
@@ -654,7 +600,7 @@ namespace board_game
             Console.WriteLine("#########################");
             await agent.SynthesisToSpeakerAsync("Vous avez gagné !");
             this.player.Win = true;
-            save();
+            await agent.SynthesisToSpeakerAsync("Voulez-vous sauvegarder ? : Oui, sauvegarder ou Non, ne pas sauvegarder");
             return true;
         }
         public async Task<bool> isIaWin()
@@ -1270,27 +1216,8 @@ namespace board_game
         }
         public void save()
         {
-            string text = "";
-            do
-            {
-                Console.WriteLine("\n do you want to save ?\nEnter yes or no.");
-                text = Console.ReadLine();
-                if (text != "yes" && text != "no")
-                {
-                    Console.WriteLine("Please Enter yes or no");
-                }
-                else if (text == "yes")
-                {
-                    Console.WriteLine("save success");
-                    Save save = new Save();
-                    save.WriteXML(this.player);
-                    break;
-                }
-                else if (text == "no")
-                {
-                    break;
-                }
-            } while (text != "yes" && text != "no");
+            Save save = new Save();
+            save.WriteXML(this.player);
         }
     }
 }

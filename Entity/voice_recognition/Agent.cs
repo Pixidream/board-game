@@ -62,7 +62,6 @@ namespace board_game
                     Console.WriteLine($"CANCELED: Did you update the subscription info?");
                 }
             }
-            // Console.ReadLine();
         }
 
         public async Task stopListening()
