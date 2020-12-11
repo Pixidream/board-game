@@ -2,16 +2,19 @@ using System.ComponentModel;
 using System.IO.Compression;
 using System;
 using System.Collections.Generic;
+using DotNetEnv;
+using System.Threading.Tasks;
 
 namespace board_game
 {
     class Game
     {
         private static Game instance = null;
+        Agent agent = Agent.getInstance(DotNetEnv.Env.GetString("AZURE_API_KEY"), DotNetEnv.Env.GetString("AZURE_API_LOCATION"));
         Grid grille;
         Grid grilleIa;
         Grid grilleAttack;
-        Player player;
+        public Player player;
         private int level = 0;
         public int Level
         {
@@ -38,7 +41,7 @@ namespace board_game
         public void displayGrid()
         {
             Console.Write("____________\n\n");
-            Console.Write("  My board  \n");
+            Console.Write($" {this.player.Name}'s  board  \n");
             Console.Write("____________\n\n");
 
             for (int k = 0; k < this.grille.Board.GetLength(1); k++)
@@ -97,11 +100,12 @@ namespace board_game
                 Console.Write("\n");
             }
         }
-        public void initPlayer()
+        public async Task initPlayer()
         {
-            Console.WriteLine("Enter your name");
-            String playerName = Console.ReadLine();
-            this.player.Name = playerName;
+            Console.WriteLine("Quel est votre nom ?");
+            await agent.SynthesisToSpeakerAsync("Quel est votre nom ?");
+            await agent.startListening();
+            // Console.ReadLine();
         }
         public void initShip1()
         {
@@ -633,7 +637,7 @@ namespace board_game
             var temp1 = Convert.ToInt32(Console.ReadLine());
         }
 
-        public bool isWin()
+        public async Task<bool> isWin()
         {
             for (int i = 0; i < this.grille.Board.GetLength(0); i++)
             {
@@ -645,14 +649,15 @@ namespace board_game
                     }
                 }
             }
-            Console.Write("#########################\n");
-            Console.Write("     Vous avez gagné     \n");
-            Console.Write("#########################");
+            Console.WriteLine("#########################");
+            Console.WriteLine("#    Vous avez gagné    #");
+            Console.WriteLine("#########################");
+            await agent.SynthesisToSpeakerAsync("Vous avez gagné !");
             this.player.Win = true;
             save();
             return true;
         }
-        public bool isIaWin()
+        public async Task<bool> isIaWin()
         {
             for (int i = 0; i < this.grille.Board.GetLength(0); i++)
             {
@@ -665,9 +670,10 @@ namespace board_game
                 }
             }
             this.player.Win = false;
-            Console.Write("#########################\n");
-            Console.Write("       You loose  :(     \n");
-            Console.Write("#########################");
+            Console.WriteLine("#########################");
+            Console.WriteLine("#       You loose  :(   #");
+            Console.WriteLine("#########################");
+            await agent.SynthesisToSpeakerAsync("Vous avez perdu !");
             return true;
         }
 
@@ -1142,7 +1148,7 @@ namespace board_game
         /*
             Player turn attack
         */
-        public void Attack(int x = 0, int y = 0)
+        public async void Attack(int x = 0, int y = 0)
         {
             // bool resultx = false;
             // bool resulty = false;
@@ -1204,7 +1210,7 @@ namespace board_game
             {
                 this.grilleIa.Board[x, y] = '2';
                 this.grilleAttack.Board[x, y] = 'X';
-                Console.WriteLine("Bateau touché en x : " + x + " y : " + y);
+                await agent.SynthesisToSpeakerAsync($"Bateau touché en {x}; {y}");
                 this.player.Score += 2;
             }
             else if (this.grilleAttack.Board[x, y].Equals('o') || this.grilleAttack.Board[x, y].Equals('X'))
@@ -1214,6 +1220,7 @@ namespace board_game
             else if (this.grilleIa.Board[x, y].Equals(' '))
             {
                 this.grilleAttack.Board[x, y] = 'o';
+                await agent.SynthesisToSpeakerAsync($"Coup manqué en {x};{y}");
                 this.player.Score--;
             }
         }
@@ -1221,18 +1228,19 @@ namespace board_game
         /*
             Ia turn attack
         */
-        public void AttackIa()
+        public async void AttackIa()
         {
             while (true)
             {
                 Random rand = new Random();
                 var x = rand.Next(0, 6);
                 var y = rand.Next(0, 6);
+                await agent.SynthesisToSpeakerAsync($"L'ennemie attaque en {x};{y}");
 
                 if (this.grille.Board[x, y].Equals('1'))
                 {
                     this.grille.Board[x, y] = 'X';
-                    Console.WriteLine("Enemy hit you x : " + x + " y : " + y);
+                    await agent.SynthesisToSpeakerAsync("L'ennemie vous a touché");
                     break;
                 }
                 else if (this.grille.Board[x, y].Equals('o') || this.grille.Board[x, y].Equals('X'))
@@ -1242,7 +1250,7 @@ namespace board_game
                 else if (this.grille.Board[x, y].Equals(' '))
                 {
                     this.grille.Board[x, y] = 'o';
-                    Console.WriteLine("Enemy have miss");
+                    await agent.SynthesisToSpeakerAsync("L'ennemie vous a manqué");
                     break;
                 }
             }

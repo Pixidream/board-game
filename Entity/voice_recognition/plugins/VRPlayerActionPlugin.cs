@@ -40,14 +40,22 @@ namespace board_game
             else if (letterX == 'f') x = 5;
             do
             {
-                Console.WriteLine(x + y);
+                await agent.SynthesisToSpeakerAsync($"Vous avez attaqué en {letterX};{y}");
                 myGame.Attack(x, y);
                 myGame.AttackIa();
                 myGame.displayGrid();
                 myGame.displayGridAttack();
-                await agent.startListening();
-                Console.ReadLine();
-            } while (!myGame.isIaWin() && !myGame.isWin());
+                Console.WriteLine("Quel est votre prochain coup ?");
+                if (myGame.isWin().Result || myGame.isIaWin().Result)
+                {
+                    break;
+                }
+                else
+                {
+                    await agent.startListening();
+                    Console.ReadLine();
+                }
+            } while (!myGame.isIaWin().Result && !myGame.isWin().Result);
         }
     }
 }

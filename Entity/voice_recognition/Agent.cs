@@ -39,7 +39,6 @@ namespace board_game
 
         public async Task startListening()
         {
-            Console.WriteLine("Quel est votre prochain coup ?");
             var result = await recognizer.RecognizeOnceAsync();
             // Checks result.
             if (result.Reason == ResultReason.RecognizedSpeech)
@@ -63,6 +62,7 @@ namespace board_game
                     Console.WriteLine($"CANCELED: Did you update the subscription info?");
                 }
             }
+            // Console.ReadLine();
         }
 
         public async Task stopListening()
@@ -81,7 +81,7 @@ namespace board_game
         public async Task SynthesisToSpeakerAsync(String text)
         {
 
-            using (var result = await synthesizer.SpeakTextAsync($"Vous avez joué en: {text}"))
+            using (var result = await synthesizer.SpeakTextAsync($"{text}"))
             {
                 if (result.Reason == ResultReason.SynthesizingAudioCompleted)
                 {

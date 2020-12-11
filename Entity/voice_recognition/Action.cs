@@ -26,7 +26,8 @@ namespace board_game
         public static ArrayList GetAllActions()
         {
             ArrayList list = new ArrayList();
-            list.Add(new Action(@"(Tirez|tirez|tiré) en (?<positionGroup>[a-fA-F] [0-6a-z][a-z]{0,1})", "playerAction"));
+            list.Add(new Action(@"(Tirez|tirez|tiré|Attaquer|attaquery) en (?<positionGroup>[a-fA-F] [0-6a-z][a-z]{0,1})", "playerAction"));
+            list.Add(new Action(@"Mon nom est (?<playerName>[aA-zZ]+)", "getPlayerName"));
             return list;
         }
 
@@ -38,7 +39,9 @@ namespace board_game
                 if (result.Success)
                 {
                     Group pos = result.Groups["positionGroup"];
+                    Group pseudo = result.Groups["playerName"];
                     act.args.Add(pos.Value);
+                    act.args.Add(pseudo.Value);
                     return act;
                 }
             }

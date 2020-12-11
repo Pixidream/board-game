@@ -33,9 +33,12 @@ namespace board_game
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(title);
             Console.ResetColor();
+            warshipAgent.onSpeech += CallbackVoice;
             Game myGame = Game.getInstance();
-            myGame.initPlayer();
+            await myGame.initPlayer();
+            // Console.ReadLine();
             Save save = new Save();
+            myGame.save();
             myGame.displayGrid();
             myGame.initShip1();
             myGame.displayGrid();
@@ -47,8 +50,7 @@ namespace board_game
             myGame.initShipIa3();
             myGame.displayGrid();
             myGame.displayGridAttack();
-            Console.Write("Enemy is ready\n");
-            warshipAgent.onSpeech += CallbackVoice;
+            await warshipAgent.SynthesisToSpeakerAsync("L'ennemie a bien créé sa map. A vous de jouer !");
             await warshipAgent.startListening();
             Console.ReadLine();
         }
@@ -66,8 +68,11 @@ namespace board_game
                     await plugin.dispatchAction(action.Args);
                 }
             }
-            await warshipAgent.SynthesisToSpeakerAsync(text);
-            await warshipAgent.startListening();
+            else
+            {
+                await warshipAgent.SynthesisToSpeakerAsync(text + " n'est pas une commande valide, réessayez");
+                await warshipAgent.startListening();
+            }
         }
     }
 }
