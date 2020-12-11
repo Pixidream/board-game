@@ -38,8 +38,8 @@ namespace board_game
             await myGame.initPlayer();
             // Console.ReadLine();
             Save save = new Save();
-            myGame.save();
             myGame.displayGrid();
+            // myGame.save();
             myGame.initShip1();
             myGame.displayGrid();
             myGame.initShip2();
